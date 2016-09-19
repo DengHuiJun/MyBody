@@ -1,15 +1,13 @@
 package com.zero.mybody;
 
-import com.zero.mybody.bean.CategoryDetail;
-import com.zero.mybody.bean.CategoryItem;
-import com.zero.mybody.bean.HttpResult;
+import com.zero.mybody.bean.CategoryDetailResult;
+import com.zero.mybody.bean.CategoryItemResult;
+import com.zero.mybody.bean.CategoryResult;
 
-import java.util.List;
-
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by zero on 16-9-14.
@@ -17,14 +15,14 @@ import retrofit2.http.Query;
 public interface CategoryService {
 
     @GET("classify")
-    Call<HttpResult> getAllCategory(@Header("apikey")String key);
+    Observable<CategoryResult> getAllCategory(@Header("apikey")String key);
 
     @GET("list")
-    Call<List<CategoryItem>> getCategoryList(@Header("apikey")String key, @Query("id")int id, @Query("page")int page, @Query("rows")int rows);
+    Observable<CategoryItemResult> getCategoryList(@Header("apikey")String key, @Query("id")int id, @Query("page")int page, @Query("rows")int rows);
 
     @GET("list")
-    Call<List<CategoryItem>> getDefaultCategoryList(@Header("apikey")String key);
+    Observable<CategoryItemResult> getDefaultCategoryList(@Header("apikey")String key, @Query("id")int id);
 
     @GET("show")
-    Call<CategoryDetail> getCategoryDetail(@Header("apikey")String key, @Query("id")int id);
+    Observable<CategoryDetailResult> getCategoryDetail(@Header("apikey")String key, @Query("id")int id);
 }
