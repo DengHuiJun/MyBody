@@ -1,10 +1,13 @@
 package com.zero.mybody;
 
-import java.io.IOException;
+import android.os.Handler;
+import android.os.Message;
+
+import com.zero.mybody.bean.HttpResult;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +27,8 @@ public class HttpManager {
 
     private Retrofit mRetrofit;
     private CategoryService mService;
+
+    public static final int REQUEST_GET_CATEGORY = 0x01;
 
     private static class SingletonHolder {
         private static final HttpManager INSTANCE = new HttpManager();
@@ -46,22 +51,22 @@ public class HttpManager {
         mService = mRetrofit.create(CategoryService.class);
     }
 
-    public void getAllCategory() {
-
-        Call<ResponseBody> call = mService.getAllCategory(MY_KEY);
-
-        call.enqueue(new Callback<ResponseBody>() {
+    public void requestGetAllCategory(final Handler handler) {
+        Call<HttpResult> call = mService.getAllCategory(MY_KEY);
+        call.enqueue(new Callback<HttpResult>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String json = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<HttpResult> call, Response<HttpResult> response) {
+                HttpResult httpResult = response.body();
+                if (httpResult != null && httpResult.isStatus()) {
+                    Message msg = Message.obtain();
+                    msg.what = REQUEST_GET_CATEGORY;
+                    msg.obj = httpResult.getTngou();
+                    handler.sendMessage(msg);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<HttpResult> call, Throwable t) {
 
             }
         });
