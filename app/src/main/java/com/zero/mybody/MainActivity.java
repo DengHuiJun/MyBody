@@ -8,17 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.zero.mybody.bean.CategoryResult;
-import com.zero.mybody.bean.CategoryResult.Category;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Subscriber;
-
 public class MainActivity extends AppCompatActivity {
-
-    private List<CategoryResult.Category> mTitleList = new ArrayList<>(10);
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -31,28 +21,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        initData();
-    }
-
-    private void initData() {
-        Subscriber subscriber = new Subscriber<Category>() {
-            @Override
-            public void onCompleted() {
-                initFragment();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Category category) {
-                mTitleList.add(category);
-            }
-        };
-
-        HttpManager.getInstance().requestGetAllCategory(subscriber);
+        initFragment();
     }
 
     private void initFragment() {
@@ -68,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PageFragment.newInstance(mTitleList.get(position).getId());
+            return PageFragment.newInstance(BaseApplication.TITLE_LIST.get(position).getId());
         }
 
         @Override
         public int getCount() {
-            return mTitleList.size();
+            return BaseApplication.TITLE_LIST.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mTitleList.get(position).getTitle();
+            return BaseApplication.TITLE_LIST.get(position).getTitle();
         }
     }
 }

@@ -61,6 +61,8 @@ public class HttpManager {
                 .flatMap(new Func1<CategoryResult, Observable<CategoryResult.Category>>() {
                     @Override
                     public Observable<CategoryResult.Category> call(CategoryResult httpResult) {
+                        // 清空一次，防止反复添加
+                        BaseApplication.TITLE_LIST.clear();
                         return Observable.from(httpResult.getCategories());
                     }
                 })
