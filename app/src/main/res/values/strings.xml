@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">MyBody</string>
+    <string name="app_name">Health News</string>
+
+    <string name="menu_search">搜索</string>
+
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
+
 </resources>

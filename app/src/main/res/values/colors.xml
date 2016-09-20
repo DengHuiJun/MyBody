@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="title_bar_bg">#3498DB</color>
+
+    <color name="toolbar_text_color">#000</color>
+    <color name="text_color_main">#ff445469</color>
+
 </resources>
