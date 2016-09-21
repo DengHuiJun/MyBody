@@ -6,4 +6,7 @@
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
 
+    <string name="drawer_open">开</string>
+    <string name="drawer_close">关</string>
+
 </resources>
