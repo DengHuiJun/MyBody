@@ -9,17 +9,12 @@ import android.util.Log;
 
 import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
-import com.zero.mybody.bean.CategoryResult;
-import com.zero.mybody.bean.CategoryResult.Category;
+import com.zero.mybody.jsonResult.CategoryResult.Category;
 import com.zero.mybody.db.column.CategoryColumn;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 

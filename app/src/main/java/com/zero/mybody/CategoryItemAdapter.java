@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.zero.mybody.bean.CategoryItemResult;
-import com.zero.mybody.bean.CategoryItemResult.CategoryItem;
+import com.zero.mybody.jsonResult.CategoryItemResult;
+import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.net.HttpManager;
 
 import java.util.List;

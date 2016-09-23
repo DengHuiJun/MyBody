@@ -1,8 +1,8 @@
 package com.zero.mybody.net;
 
-import com.zero.mybody.bean.CategoryDetailResult;
-import com.zero.mybody.bean.CategoryItemResult;
-import com.zero.mybody.bean.CategoryResult;
+import com.zero.mybody.jsonResult.CategoryDetailResult;
+import com.zero.mybody.jsonResult.CategoryItemResult;
+import com.zero.mybody.jsonResult.CategoryResult;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;

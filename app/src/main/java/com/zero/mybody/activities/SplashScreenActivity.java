@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.zero.mybody.BaseApplication;
 import com.zero.mybody.net.HttpManager;
-import com.zero.mybody.bean.CategoryResult;
+import com.zero.mybody.jsonResult.CategoryResult;
 import com.zero.mybody.db.DataManager;
 import com.zero.mybody.utils.NetUtils;
 
@@ -40,7 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void initTitleAndGoToMain(List<CategoryResult.Category> list) {
         if (list == null || list.isEmpty()) {
-            Toast.makeText(this, "请打开网络后重新进入！", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "第一次进入请打开网络！", Toast.LENGTH_LONG).show();
 //            NetUtils.openSetting(this);
             finish();
             return;

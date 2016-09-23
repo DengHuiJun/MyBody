@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "mybody.db";
 
     private static final String SQL_CREATE_CATEGORY_TABLE = "create table t_category("
-            + "categoryPOID integer primary key autoincrement not null,"
+            + "CID integer primary key autoincrement not null,"
             + "createdTime long,"
             + "lastUpdateTime long,"
             + "id integer not null,"
@@ -22,9 +22,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "title varchar(50),"
             + "description varchar(255))";
 
-//    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-//        super(context, name, factory, version);
-//    }
+    private static final String SQL_CREATE_CATEGORY_ITEM_TABLE = "create table t_category_item("
+            + "CID integer primary key autoincrement not null,"
+            + "createdTime long,"
+            + "lastUpdateTime long,"
+            + "id integer not null,"
+            + "keywords varchar(50),"
+            + "title varchar(50),"
+            + "description varchar(255),"
+            + "infoclass integer not null,"
+            + "fcount integer,"
+            + "rcount integer,"
+            + "count integer,"
+            + "time long,"
+            + "img varchar(100))";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -33,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CATEGORY_TABLE);
+        db.execSQL(SQL_CREATE_CATEGORY_ITEM_TABLE);
     }
 
     @Override

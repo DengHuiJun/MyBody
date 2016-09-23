@@ -1,4 +1,4 @@
-package com.zero.mybody.bean;
+package com.zero.mybody.jsonResult;
 
 /**
  * 详情页

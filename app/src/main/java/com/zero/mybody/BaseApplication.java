@@ -2,7 +2,7 @@ package com.zero.mybody;
 
 import android.app.Application;
 
-import com.zero.mybody.bean.CategoryResult;
+import com.zero.mybody.jsonResult.CategoryResult;
 
 import java.util.ArrayList;
 import java.util.List;

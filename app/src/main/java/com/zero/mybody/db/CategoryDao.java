@@ -1,6 +1,6 @@
 package com.zero.mybody.db;
 
-import com.zero.mybody.bean.CategoryResult.Category;
+import com.zero.mybody.jsonResult.CategoryResult.Category;
 
 import java.util.List;
 
