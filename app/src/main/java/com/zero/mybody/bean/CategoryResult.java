@@ -50,6 +50,13 @@ public class CategoryResult {
         private int seq;
         private String title;
 
+        public Category() {}
+
+        public Category(int id, String title) {
+            this.id = id;
+            this.title = title;
+        }
+
         public String getDescription() {
             return description;
         }

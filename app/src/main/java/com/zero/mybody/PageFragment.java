@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.zero.mybody.bean.CategoryItemResult.CategoryItem;
+import com.zero.mybody.net.HttpManager;
 
 import java.util.ArrayList;
 import java.util.List;

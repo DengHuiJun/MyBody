@@ -1,4 +1,4 @@
-package com.zero.mybody;
+package com.zero.mybody.net;
 
 import com.zero.mybody.bean.CategoryItemResult;
 import com.zero.mybody.bean.CategoryResult;
