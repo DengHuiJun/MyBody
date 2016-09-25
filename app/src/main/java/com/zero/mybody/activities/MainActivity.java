@@ -1,12 +1,14 @@
 package com.zero.mybody.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,23 +16,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.zero.mybody.BaseApplication;
 import com.zero.mybody.PageFragment;
 import com.zero.mybody.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar mToolbar;
-    private ListView mDrawerLv;
-
-    private String[] mStrs = {"夜间模式", "离线下载", "相关设置"};
+    private NavigationView mNavView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         findView();
         initDrawer();
         initFragment();
+
+        mNavView.setNavigationItemSelectedListener(this);
     }
 
     private void initToolBar() {
@@ -57,13 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void findView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLv = (ListView) findViewById(R.id.left_drawer_lv);
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
     }
 
     private void initDrawer() {
-        mDrawerLv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrs));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -100,9 +100,40 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initFragment() {
         mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private class FragmentAdapter extends FragmentPagerAdapter {

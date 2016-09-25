@@ -7,8 +7,7 @@
     card_view:cardBackgroundColor="#E6E6E6"
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="8dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground" >
+    android:clickable="true" >
 
     <!-- Main Content View -->
     <LinearLayout

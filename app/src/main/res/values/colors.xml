@@ -9,4 +9,6 @@
     <color name="toolbar_text_color">#000</color>
     <color name="text_color_main">#ff445469</color>
 
+    <color name="white">#fff</color>
+
 </resources>

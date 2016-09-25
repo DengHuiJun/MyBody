@@ -5,8 +5,8 @@
 
     <ProgressBar
         android:id="@+id/page_pb"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
@@ -14,7 +14,7 @@
         android:id="@+id/page_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/white"
+        android:divider="@color/white"
         android:dividerHeight="5dp" >
 
     </ListView>
