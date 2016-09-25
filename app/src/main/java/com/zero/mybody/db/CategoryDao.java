@@ -1,5 +1,6 @@
 package com.zero.mybody.db;
 
+import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.jsonResult.CategoryResult.Category;
 
 import java.util.List;
@@ -11,9 +12,15 @@ import rx.Observable;
  */
 public interface CategoryDao {
 
-    void addCategory(Category... category);
+    void addCategoryList(Category... category);
 
     Observable<List<Category>> getCategoryList();
 
     void deleteAllCategory();
+
+    void addCategoryItemList(CategoryItem... categoryItems);
+
+    Observable<List<CategoryItem>> getCategoryItemList();
+
+    void deleteAllCategoryItem();
 }

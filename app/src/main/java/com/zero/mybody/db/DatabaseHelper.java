@@ -37,8 +37,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "time long,"
             + "img varchar(100))";
 
+    private static final int DB_VERSION = 1;
+
     public DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override

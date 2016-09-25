@@ -23,6 +23,12 @@ public class CategoryItemAdapter extends BaseAdapter {
     private Context mContext;
     private List<CategoryItemResult.CategoryItem> mList;
 
+    public interface OnCategoryClickListener {
+        void onClickItem(int id);
+    }
+
+    private OnCategoryClickListener listener;
+
     public CategoryItemAdapter(Context context, List<CategoryItem> list) {
         mContext = context;
         mList = list;
@@ -46,11 +52,12 @@ public class CategoryItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Holder holder = null;
-        CategoryItem item = mList.get(position);
+        final CategoryItem item = mList.get(position);
 
         if (convertView == null) {
             holder = new Holder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.page_lv_item, null);
+            holder.itemLy = convertView.findViewById(R.id.item_ly);
             holder.img = (ImageView) convertView.findViewById(R.id.item_img);
             holder.descriptionTv = (TextView) convertView.findViewById(R.id.item_description_tv);
             convertView.setTag(holder);
@@ -59,6 +66,14 @@ public class CategoryItemAdapter extends BaseAdapter {
         }
 
         holder.descriptionTv.setText(item.getDescription());
+
+        holder.itemLy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickItem(item.getId());
+            }
+        });
+
         Glide.with(mContext).load(HttpManager.IMG_URL+item.getImg()).into(holder.img);
         return convertView;
     }
@@ -69,7 +84,12 @@ public class CategoryItemAdapter extends BaseAdapter {
     }
 
     private static class Holder {
+        View itemLy;
         ImageView img;
         TextView descriptionTv;
+    }
+
+    public void setOnCategoryClickListener(OnCategoryClickListener listener) {
+        this.listener = listener;
     }
 }

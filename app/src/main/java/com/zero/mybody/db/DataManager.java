@@ -9,6 +9,9 @@ import android.util.Log;
 
 import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
+import com.zero.mybody.db.column.CategoryItemColumn;
+import com.zero.mybody.jsonResult.CategoryItemResult;
+import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.jsonResult.CategoryResult.Category;
 import com.zero.mybody.db.column.CategoryColumn;
 
@@ -43,7 +46,7 @@ public class DataManager implements CategoryDao{
         mBriteDatabase = SqlBrite.create().wrapDatabaseHelper(new DatabaseHelper(context), Schedulers.io());
     }
 
-    private void add(@NonNull Category category) {
+    private void addCategory(@NonNull Category category) {
         ContentValues cv = new ContentValues();
         cv.put("id", category.getId());
         cv.put("name", category.getName());
@@ -56,9 +59,26 @@ public class DataManager implements CategoryDao{
         mBriteDatabase.insert("t_category", cv);
     }
 
+    private void addCategoryItem(CategoryItem categoryItem) {
+        ContentValues cv = new ContentValues();
+        cv.put("createdTime", System.currentTimeMillis());
+        cv.put("lastUpdateTime", System.currentTimeMillis());
+        cv.put("id", categoryItem.getId());
+        cv.put("title", categoryItem.getTitle());
+        cv.put("time", categoryItem.getTime());
+        cv.put("keywords", categoryItem.getKeywords());
+        cv.put("description", categoryItem.getDescription());
+        cv.put("img", categoryItem.getImg());
+        cv.put("infoclass", categoryItem.getInfoclass());
+        cv.put("fcount", categoryItem.getFcount());
+        cv.put("rcount", categoryItem.getRcount());
+        cv.put("count", categoryItem.getCount());
+        mBriteDatabase.insert("t_category_item", cv);
+    }
+
 
     @Override
-    public void addCategory(Category... category) {
+    public void addCategoryList(Category... category) {
         if (category.length <= 0) {
             return;
         }
@@ -66,7 +86,7 @@ public class DataManager implements CategoryDao{
         BriteDatabase.Transaction transaction = mBriteDatabase.newTransaction();
         try {
             for (Category item : category) {
-                add(item);
+                addCategory(item);
             }
             transaction.markSuccessful();
         } finally {
@@ -84,7 +104,6 @@ public class DataManager implements CategoryDao{
             public Category call(Cursor cursor) {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow(CategoryColumn.ID));
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(CategoryColumn.TITLE));
-                Log.d("zero",id+title);
                 return new Category(id, title);
             }
         });
@@ -93,5 +112,43 @@ public class DataManager implements CategoryDao{
     @Override
     public void deleteAllCategory() {
         mBriteDatabase.delete(CategoryColumn.TABLE_NAME, null, new String[]{});
+    }
+
+    @Override
+    public void addCategoryItemList(CategoryItem... categoryItems) {
+        if (categoryItems.length <= 0) {
+            return;
+        }
+
+        BriteDatabase.Transaction transaction = mBriteDatabase.newTransaction();
+        try {
+            for (CategoryItem item : categoryItems) {
+                addCategoryItem(item);
+            }
+            transaction.markSuccessful();
+        } finally {
+            transaction.end();
+        }
+    }
+
+    @Override
+    public Observable<List<CategoryItem>> getCategoryItemList() {
+
+        String sql = "SELECT * FROM t_category_item";
+        return mBriteDatabase.createQuery(CategoryItemColumn.TABLE_NAME, sql, new String[]{})
+                .mapToList(new Func1<Cursor, CategoryItem>() {
+                    @Override
+                    public CategoryItem call(Cursor cursor) {
+                        int id = cursor.getInt(cursor.getColumnIndexOrThrow(CategoryItemColumn.ID));
+
+
+                        return null;
+                    }
+                });
+    }
+
+    @Override
+    public void deleteAllCategoryItem() {
+        mBriteDatabase.delete(CategoryItemColumn.TABLE_NAME, null, new String[]{});
     }
 }

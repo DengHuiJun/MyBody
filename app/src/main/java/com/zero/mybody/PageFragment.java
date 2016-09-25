@@ -1,6 +1,7 @@
 package com.zero.mybody;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.zero.mybody.activities.DetailActivity;
 import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.net.HttpManager;
 
@@ -23,7 +25,7 @@ import rx.Subscriber;
  * 资讯列表
  * Created by zero on 16-9-19.
  */
-public class PageFragment extends Fragment {
+public class PageFragment extends Fragment implements CategoryItemAdapter.OnCategoryClickListener {
 
     public static final String CATEGORY_ID = "category_id";
 
@@ -56,6 +58,7 @@ public class PageFragment extends Fragment {
         mPb = (ProgressBar) view.findViewById(R.id.page_pb);
         mListView = (ListView) view.findViewById(R.id.page_list_view);
         mAdapter = new CategoryItemAdapter(getActivity(), mDataList);
+        mAdapter.setOnCategoryClickListener(this);
         mListView.setAdapter(mAdapter);
         return view;
     }
@@ -97,4 +100,10 @@ public class PageFragment extends Fragment {
         HttpManager.getInstance().requestGetCategoryList(subscriber, mCategoryId);
     }
 
+    @Override
+    public void onClickItem(int id) {
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(DetailActivity.EXTRA_KEY_URL, id);
+        startActivity(intent);
+    }
 }

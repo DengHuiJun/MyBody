@@ -78,7 +78,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onCompleted() {
                 if (mList.size() > 0) {
                     DataManager.getInstance(getApplicationContext()).deleteAllCategory();
-                    DataManager.getInstance(getApplicationContext()).addCategory(mList.toArray(new CategoryResult.Category[mList.size()]));
+                    DataManager.getInstance(getApplicationContext()).addCategoryList(mList.toArray(new CategoryResult.Category[mList.size()]));
                     initTitleAndGoToMain(mList);
                 } else {
                     // 从本地获取标题列表
