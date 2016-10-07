@@ -13,6 +13,8 @@ import com.zero.mybody.jsonResult.CategoryItemResult;
 import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.net.HttpManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,11 +62,15 @@ public class CategoryItemAdapter extends BaseAdapter {
             holder.itemLy = convertView.findViewById(R.id.item_ly);
             holder.img = (ImageView) convertView.findViewById(R.id.item_img);
             holder.descriptionTv = (TextView) convertView.findViewById(R.id.item_description_tv);
+            holder.timeTv = (TextView) convertView.findViewById(R.id.item_time_tv);
+            holder.titleTv = (TextView) convertView.findViewById(R.id.item_title_tv);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
 
+        holder.titleTv.setText(item.getTitle());
+        holder.timeTv.setText(toTime(item.getTime()));
         holder.descriptionTv.setText(item.getDescription());
 
         holder.itemLy.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +93,17 @@ public class CategoryItemAdapter extends BaseAdapter {
         View itemLy;
         ImageView img;
         TextView descriptionTv;
+        TextView titleTv;
+        TextView timeTv;
     }
 
     public void setOnCategoryClickListener(OnCategoryClickListener listener) {
         this.listener = listener;
+    }
+
+    private String toTime(long time) {
+        Date date = new Date(time);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        return simpleDateFormat.format(date);
     }
 }

@@ -9,4 +9,9 @@
     <string name="drawer_open">开</string>
     <string name="drawer_close">关</string>
 
+    <string name="has_read">已阅</string>
+
+    <string name="news_content">加载失败或链接失效</string>
+
+    <string name="loading_text">正在加载中...</string>
 </resources>

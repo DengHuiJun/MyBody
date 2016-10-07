@@ -1,5 +1,6 @@
 package com.zero.mybody.net;
 
+import com.zero.mybody.jsonResult.CategoryDetailResult;
 import com.zero.mybody.jsonResult.CategoryItemResult;
 import com.zero.mybody.jsonResult.CategoryResult;
 
@@ -78,6 +79,14 @@ public class HttpManager {
                         return Observable.from(categoryItemResult.getCategoryItems());
                     }
                 })
+                .subscribe(subscriber);
+    }
+
+    public void requestGetCategoryDetail(Subscriber<CategoryDetailResult> subscriber, int id) {
+        mService.getCategoryDetail(MY_KEY, id)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 

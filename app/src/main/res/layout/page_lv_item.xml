@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="#E6E6E6"
-    card_view:cardCornerRadius="8dp"
+    card_view:cardCornerRadius="0dp"
     card_view:cardElevation="8dp"
     android:clickable="true" >
 
@@ -16,17 +16,46 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/item_img"
-            android:layout_margin="8dp"
+        <TextView
+            android:id="@+id/item_title_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="卧室标题" />
 
         <TextView
-            android:id="@+id/item_description_tv"
-            android:layout_margin="8dp"
+            android:id="@+id/item_time_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:gravity="center"
+            android:text="2015-12-16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_description_tv"
+                android:layout_margin="8dp"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/item_img"
+                android:layout_margin="8dp"
+                android:layout_width="80dp"
+                android:layout_height="60dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -41,7 +41,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void initTitleAndGoToMain(List<CategoryResult.Category> list) {
         if (list == null || list.isEmpty()) {
             Toast.makeText(this, "第一次进入请打开网络！", Toast.LENGTH_LONG).show();
-//            NetUtils.openSetting(this);
             finish();
             return;
         }

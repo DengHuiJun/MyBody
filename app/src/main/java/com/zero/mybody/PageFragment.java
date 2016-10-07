@@ -1,7 +1,6 @@
 package com.zero.mybody;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.zero.mybody.activities.DetailActivity;
 import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.net.HttpManager;
 
@@ -34,6 +32,7 @@ public class PageFragment extends Fragment implements CategoryItemAdapter.OnCate
     private int mCategoryId = 0;
 
     private ProgressBar mPb;
+    private NewsDetailFragment mDetailFragment = null;
 
     private List<CategoryItem> mDataList = new ArrayList<>();
 
@@ -102,8 +101,12 @@ public class PageFragment extends Fragment implements CategoryItemAdapter.OnCate
 
     @Override
     public void onClickItem(int id) {
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra(DetailActivity.EXTRA_KEY_URL, id);
-        startActivity(intent);
+        if (mDetailFragment == null) {
+            mDetailFragment = new NewsDetailFragment();
+        }
+        Bundle bundle = new Bundle();
+        bundle.putInt(NewsDetailFragment.KEY_NEWS_ID, id);
+        mDetailFragment.setArguments(bundle);
+        mDetailFragment.show(getFragmentManager(), "NewsDetailFragment");
     }
 }
