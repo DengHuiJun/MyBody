@@ -87,6 +87,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
+                Toast.makeText(getApplicationContext(), "加载出错！请联系开发者！", Toast.LENGTH_LONG).show();
                 finish();
             }
 

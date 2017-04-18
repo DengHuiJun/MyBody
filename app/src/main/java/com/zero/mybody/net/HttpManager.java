@@ -21,9 +21,7 @@ import rx.schedulers.Schedulers;
  */
 public class HttpManager {
 
-    private static final String MY_KEY = "e98b79f5091ab600ae3a3add2c0b3ecc";
-
-    private static final String BASE_URL = "http://apis.baidu.com/tngou/info/";
+    private static final String BASE_URL = "http://www.tngou.net/api/info/";
 
     public static final String IMG_URL = "http://tnfs.tngou.net/image";
 
@@ -40,7 +38,7 @@ public class HttpManager {
         return SingletonHolder.INSTANCE;
     }
 
-    public HttpManager() {
+    private HttpManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
@@ -55,7 +53,7 @@ public class HttpManager {
     }
 
     public void requestGetAllCategory(Subscriber<CategoryResult.Category> subscriber) {
-        mService.getAllCategory(MY_KEY)
+        mService.getAllCategory()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,7 +67,7 @@ public class HttpManager {
     }
 
     public void requestGetCategoryList(Subscriber<CategoryItemResult.CategoryItem> subscriber, int id) {
-        mService.getDefaultCategoryList(MY_KEY, id)
+        mService.getDefaultCategoryList(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,7 +81,7 @@ public class HttpManager {
     }
 
     public void requestGetCategoryDetail(Subscriber<CategoryDetailResult> subscriber, int id) {
-        mService.getCategoryDetail(MY_KEY, id)
+        mService.getCategoryDetail(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -15,14 +15,14 @@ import rx.Observable;
 public interface CategoryService {
 
     @GET("classify")
-    Observable<CategoryResult> getAllCategory(@Header("apikey")String key);
+    Observable<CategoryResult> getAllCategory();
 
     @GET("list")
-    Observable<CategoryItemResult> getCategoryList(@Header("apikey")String key, @Query("id")int id, @Query("page")int page, @Query("rows")int rows);
+    Observable<CategoryItemResult> getCategoryList(@Query("id")int id, @Query("page")int page, @Query("rows")int rows);
 
     @GET("list")
-    Observable<CategoryItemResult> getDefaultCategoryList(@Header("apikey")String key, @Query("id")int id);
+    Observable<CategoryItemResult> getDefaultCategoryList(@Query("id")int id);
 
     @GET("show")
-    Observable<CategoryDetailResult> getCategoryDetail(@Header("apikey")String key, @Query("id")int id);
+    Observable<CategoryDetailResult> getCategoryDetail(@Query("id")int id);
 }
