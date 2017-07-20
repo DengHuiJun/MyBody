@@ -1,5 +1,8 @@
 package com.zero.mybody.jsonResult;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -42,7 +45,7 @@ public class CategoryResult {
         this.categories = categories;
     }
 
-    public static class Category {
+    public static class Category implements Parcelable {
         private String description;
         private int id;
         private String keywords;
@@ -51,6 +54,23 @@ public class CategoryResult {
         private String title;
 
         public Category() {}
+
+        private Category(Parcel in) {
+            readFromParcel(in);
+        }
+
+        public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+
+            @Override
+            public Category createFromParcel(Parcel source) {
+                return new Category(source);
+            }
+
+            @Override
+            public Category[] newArray(int size) {
+                return new Category[size];
+            }
+        };
 
         public Category(int id, String title) {
             this.id = id;
@@ -103,6 +123,30 @@ public class CategoryResult {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(description);
+            dest.writeInt(id);
+            dest.writeString(name);
+            dest.writeString(keywords);
+            dest.writeInt(seq);
+            dest.writeString(title);
+        }
+
+        public void readFromParcel(Parcel in) {
+            description = in.readString();
+            id = in.readInt();
+            name = in.readString();
+            keywords = in.readString();
+            seq = in.readInt();
+            title = in.readString();
         }
     }
 }

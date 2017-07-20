@@ -9,8 +9,7 @@
 
     <meta-data
         android:name="com.qihoo360.plugin.name"
-        android:value="plugin1" />
-
+        android:value="pluginNews" />
     <meta-data
         android:name="com.qihoo360.plugin.version.ver"
         android:value="100" />
@@ -24,14 +23,22 @@
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:theme="@style/SplashTheme">
-        </activity>
+            android:theme="@style/SplashTheme"/>
+
+        <service
+            android:name=".service.NewsService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="denghui.me.replugindemo.plugin1.ICatchNews"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
