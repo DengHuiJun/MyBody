@@ -1,31 +1,11 @@
 package com.zero.mybody.db;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.squareup.sqlbrite.BriteDatabase;
-import com.squareup.sqlbrite.SqlBrite;
-import com.zero.mybody.db.column.CategoryItemColumn;
-import com.zero.mybody.jsonResult.CategoryItemResult;
-import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
-import com.zero.mybody.jsonResult.CategoryResult.Category;
-import com.zero.mybody.db.column.CategoryColumn;
-
-import java.util.List;
-
-import rx.Observable;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
 /**
  * Created by zero on 16-9-21.
  */
-public class DataManager implements CategoryDao{
+public class DataManager implements CategoryDao {
 
+    /*
     private BriteDatabase mBriteDatabase;
 
     private static DataManager INSTANCE;
@@ -151,4 +131,5 @@ public class DataManager implements CategoryDao{
     public void deleteAllCategoryItem() {
         mBriteDatabase.delete(CategoryItemColumn.TABLE_NAME, null, new String[]{});
     }
+    */
 }

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.zero.mybody.PageFragment;
 import com.zero.mybody.R;
@@ -17,7 +16,7 @@ import com.zero.mybody.net.HttpManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,35 +45,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadTitleListFromNet() {
-        Subscriber subscriber = new Subscriber<CategoryResult.Category>() {
+        Consumer<CategoryResult> consumer = new Consumer<CategoryResult>() {
             @Override
-            public void onCompleted() {
+            public void accept(CategoryResult categoryResult) throws Exception {
+                mList = categoryResult.getCategories();
                 initFragment();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(getApplicationContext(), "加载出错！请联系开发者！", Toast.LENGTH_LONG).show();
-                finish();
-            }
-
-            @Override
-            public void onNext(CategoryResult.Category category) {
-                mList.add(category);
-            }
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                if (mList == null) {
-                    mList = new ArrayList<>(10);
-                } else {
-                    mList.clear();
-                }
             }
         };
 
-        HttpManager.getInstance().requestGetAllCategory(subscriber);
+        HttpManager.getInstance().requestGetAllCategory(consumer);
     }
 
     private class FragmentAdapter extends FragmentPagerAdapter {

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.zero.mybody.jsonResult.CategoryDetailResult;
 import com.zero.mybody.net.HttpManager;
 
-import rx.Subscriber;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by hui_deng on 16/9/27.
@@ -59,34 +59,20 @@ public class NewsDetailFragment extends DialogFragment {
         setDetail();
     }
 
-    @SuppressWarnings("deprecation")
     private void setDetail() {
-        Subscriber<CategoryDetailResult> subscriber = new Subscriber<CategoryDetailResult>() {
+        Consumer<CategoryDetailResult> consumer = new Consumer<CategoryDetailResult>() {
             @Override
-            public void onCompleted() {
-                mLoadLayout.setVisibility(View.GONE);
-                mContentTv.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mLoadLayout.setVisibility(View.GONE);
-                mContentTv.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onNext(CategoryDetailResult categoryDetailResult) {
+            public void accept(CategoryDetailResult categoryDetailResult) throws Exception {
                 mContentTv.setText(Html.fromHtml(categoryDetailResult.getMessage()));
-            }
 
-            @Override
-            public void onStart() {
-                mContentTv.setVisibility(View.GONE);
-                mLoadLayout.setVisibility(View.VISIBLE);
+                mLoadLayout.setVisibility(View.GONE);
+                mContentTv.setVisibility(View.VISIBLE);
             }
         };
 
-        HttpManager.getInstance().requestGetCategoryDetail(subscriber, mId);
+        mContentTv.setVisibility(View.GONE);
+        mLoadLayout.setVisibility(View.VISIBLE);
+        HttpManager.getInstance().requestGetCategoryDetail(consumer, mId);
     }
 
 }

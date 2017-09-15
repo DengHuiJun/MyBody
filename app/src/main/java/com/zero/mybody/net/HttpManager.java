@@ -1,20 +1,22 @@
 package com.zero.mybody.net;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.zero.mybody.jsonResult.CategoryDetailResult;
 import com.zero.mybody.jsonResult.CategoryItemResult;
 import com.zero.mybody.jsonResult.CategoryResult;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by zero on 16-9-18.
@@ -38,54 +40,54 @@ public class HttpManager {
         return SingletonHolder.INSTANCE;
     }
 
+    private static OkHttpClient httpClient = new OkHttpClient.Builder()
+            .addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request.Builder builder = chain.request().newBuilder();
+                    builder.addHeader("token", "abc");
+                    return chain.proceed(builder.build());
+                }
+            }).connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build();
+
     private HttpManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         mRetrofit = new Retrofit.Builder()
-                .client(builder.build())
+                .client(httpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         mService = mRetrofit.create(CategoryService.class);
     }
 
-    public void requestGetAllCategory(Subscriber<CategoryResult.Category> subscriber) {
+    public void requestGetAllCategory(Consumer<CategoryResult> consumer) {
         mService.getAllCategory()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<CategoryResult, Observable<CategoryResult.Category>>() {
-                    @Override
-                    public Observable<CategoryResult.Category> call(CategoryResult httpResult) {
-                        return Observable.from(httpResult.getCategories());
-                    }
-                })
-                .subscribe(subscriber);
+                .subscribe(consumer);
     }
 
-    public void requestGetCategoryList(Subscriber<CategoryItemResult.CategoryItem> subscriber, int id) {
+    public void requestGetCategoryList(Consumer<CategoryItemResult> consumer, int id) {
         mService.getDefaultCategoryList(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<CategoryItemResult, Observable<CategoryItemResult.CategoryItem>>() {
-                    @Override
-                    public Observable<CategoryItemResult.CategoryItem> call(CategoryItemResult categoryItemResult) {
-                        return Observable.from(categoryItemResult.getCategoryItems());
-                    }
-                })
-                .subscribe(subscriber);
+                .subscribe(consumer);
     }
 
-    public void requestGetCategoryDetail(Subscriber<CategoryDetailResult> subscriber, int id) {
+    public void requestGetCategoryDetail(Consumer<CategoryDetailResult> consumer, int id) {
         mService.getCategoryDetail(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
+                .subscribe(consumer);
     }
 
 }

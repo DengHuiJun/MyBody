@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.zero.mybody.jsonResult.CategoryItemResult;
 import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
 import com.zero.mybody.net.HttpManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.functions.Consumer;
 
 /**
  * 资讯列表
@@ -66,37 +67,21 @@ public class PageFragment extends Fragment implements CategoryItemAdapter.OnCate
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Subscriber subscriber = new Subscriber<CategoryItem>() {
+        Consumer<CategoryItemResult> consumer = new Consumer<CategoryItemResult>() {
             @Override
-            public void onCompleted() {
+            public void accept(CategoryItemResult categoryItemResult) throws Exception {
+                mDataList = categoryItemResult.getCategoryItems();
+                if (mDataList == null || mDataList.isEmpty()) {
+                    Snackbar.make(mListView, "加载失败！", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
                 mAdapter.setList(mDataList);
                 mPb.setVisibility(View.GONE);
-                if (mDataList.isEmpty()) {
-                    Snackbar.make(mListView, "加载失败！", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(CategoryItem categoryItem) {
-                mDataList.add(categoryItem);
-            }
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                // 清空一次，防止反复添加
-                mDataList.clear();
-
-                mPb.setVisibility(View.VISIBLE);
             }
         };
 
-        HttpManager.getInstance().requestGetCategoryList(subscriber, mCategoryId);
+        mPb.setVisibility(View.VISIBLE);
+        HttpManager.getInstance().requestGetCategoryList(consumer, mCategoryId);
     }
 
     @Override

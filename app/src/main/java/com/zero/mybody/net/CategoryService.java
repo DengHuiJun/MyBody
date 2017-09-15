@@ -4,10 +4,9 @@ import com.zero.mybody.jsonResult.CategoryDetailResult;
 import com.zero.mybody.jsonResult.CategoryItemResult;
 import com.zero.mybody.jsonResult.CategoryResult;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * Created by zero on 16-9-14.

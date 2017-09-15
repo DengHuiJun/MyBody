@@ -4,18 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.widget.Toast;
 
 import com.zero.mybody.ICallBack;
 import com.zero.mybody.ICatchNews;
 import com.zero.mybody.jsonResult.Category;
-import com.zero.mybody.jsonResult.CategoryResult;
-import com.zero.mybody.net.HttpManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Subscriber;
 
 public class NewsService extends Service {
 
@@ -43,34 +38,34 @@ public class NewsService extends Service {
     };
 
     private void loadTitleListFromNet() {
-        Subscriber subscriber = new Subscriber<CategoryResult.Category>() {
-            @Override
-            public void onCompleted() {
-                try {
-                    mCallBack.setTitles(datas);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
+//        Subscriber subscriber = new Subscriber<CategoryResult.Category>() {
+//            @Override
+//            public void onCompleted() {
+//                try {
+//                    mCallBack.setTitles(datas);
+//                } catch (RemoteException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Toast.makeText(getApplicationContext(), "加载出错！请联系开发者！", Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onNext(CategoryResult.Category category) {
+//                Category c = new Category();
+//                c.setId(category.getId());
+//                c.setDescription(category.getDescription());
+//                c.setKeywords(category.getKeywords());
+//                c.setName(category.getName());
+//                c.setSeq(category.getSeq());
+//                c.setTitle(category.getTitle());
+//                datas.add(c);
+//            }
+//        };
 
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(getApplicationContext(), "加载出错！请联系开发者！", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNext(CategoryResult.Category category) {
-                Category c = new Category();
-                c.setId(category.getId());
-                c.setDescription(category.getDescription());
-                c.setKeywords(category.getKeywords());
-                c.setName(category.getName());
-                c.setSeq(category.getSeq());
-                c.setTitle(category.getTitle());
-                datas.add(c);
-            }
-        };
-
-        HttpManager.getInstance().requestGetAllCategory(subscriber);
+//        HttpManager.getInstance().requestGetAllCategory(subscriber);
     }
 }
