@@ -10,7 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.zero.mybody.PageFragment;
 import com.zero.mybody.R;
-import com.zero.mybody.jsonResult.CategoryResult;
+import com.zero.mybody.jsonResult.Category;
+import com.zero.mybody.jsonResult.Category.ShowapiResBodyBean.ListBean;
 import com.zero.mybody.net.HttpManager;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
-    private List<CategoryResult.Category> mList = new ArrayList<>();
+    private List<ListBean> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadTitleListFromNet() {
-        Consumer<CategoryResult> consumer = new Consumer<CategoryResult>() {
+        Consumer<Category> consumer = new Consumer<Category>() {
             @Override
-            public void accept(CategoryResult categoryResult) throws Exception {
-                mList = categoryResult.getCategories();
+            public void accept(Category category) throws Exception {
+                mList = category.getShowapi_res_body().getList();
                 initFragment();
             }
         };
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mList.get(position).getTitle();
+            return mList.get(position).getName();
         }
     }
 }

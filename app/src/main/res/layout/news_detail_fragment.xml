@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent" >
 
-    <include layout="@layout/loading_layout" />
-
-    <TextView
-        android:id="@+id/news_detail_tv"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/loading_layout"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/news_content"
-        android:textSize="17sp"
-        android:lineSpacingExtra="2dp" />
+        android:layout_height="wrap_content" >
+
+    </LinearLayout>
 
 </FrameLayout>

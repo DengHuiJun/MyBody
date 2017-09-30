@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class com.just.library.** {
+    *;
+}
+-keepclassmembers class com.just.library.agentweb.AndroidInterface{ *; }
+-dontwarn com.just.library.**

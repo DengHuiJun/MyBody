@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.zero.mybody.BaseApplication;
 import com.zero.mybody.R;
-import com.zero.mybody.jsonResult.CategoryResult;
+import com.zero.mybody.jsonResult.Category.ShowapiResBodyBean.ListBean;
 import com.zero.mybody.utils.NetUtils;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private static final String TAG = "SplashScreenActivity";
 
     // 将网络下载的类目存入本地数据库
-    private List<CategoryResult.Category> mList = new ArrayList<>(7);
+    private List<ListBean> mList = new ArrayList<>(7);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
     }
 
-    private void initTitleAndGoToMain(List<CategoryResult.Category> list) {
+    private void initTitleAndGoToMain(List<ListBean> list) {
         if (list == null || list.isEmpty()) {
             Toast.makeText(this, "第一次进入请打开网络！", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         BaseApplication.TITLE_LIST.clear();
-        for (CategoryResult.Category category : list) {
+        for (ListBean category : list) {
             BaseApplication.TITLE_LIST.add(category);
         }
         goToMainAndFinish();

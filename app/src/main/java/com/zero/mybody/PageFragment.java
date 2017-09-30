@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.zero.mybody.jsonResult.CategoryItemResult;
-import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
+import com.zero.mybody.jsonResult.CategoryList;
+import com.zero.mybody.jsonResult.CategoryList.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.zero.mybody.net.HttpManager;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class PageFragment extends Fragment implements CategoryItemAdapter.OnCate
     private ProgressBar mPb;
     private NewsDetailFragment mDetailFragment = null;
 
-    private List<CategoryItem> mDataList = new ArrayList<>();
+    private List<ContentlistBean> mDataList = new ArrayList<>();
 
     public static PageFragment newInstance(int categoryId) {
         Bundle args = new Bundle();
@@ -67,10 +67,10 @@ public class PageFragment extends Fragment implements CategoryItemAdapter.OnCate
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Consumer<CategoryItemResult> consumer = new Consumer<CategoryItemResult>() {
+        Consumer<CategoryList> consumer = new Consumer<CategoryList>() {
             @Override
-            public void accept(CategoryItemResult categoryItemResult) throws Exception {
-                mDataList = categoryItemResult.getCategoryItems();
+            public void accept(CategoryList categoryItemResult) throws Exception {
+                mDataList = categoryItemResult.getShowapi_res_body().getPagebean().getContentlist();
                 if (mDataList == null || mDataList.isEmpty()) {
                     Snackbar.make(mListView, "加载失败！", Snackbar.LENGTH_SHORT).show();
                     return;
@@ -85,12 +85,12 @@ public class PageFragment extends Fragment implements CategoryItemAdapter.OnCate
     }
 
     @Override
-    public void onClickItem(int id) {
+    public void onClickItem(String url) {
         if (mDetailFragment == null) {
             mDetailFragment = new NewsDetailFragment();
         }
         Bundle bundle = new Bundle();
-        bundle.putInt(NewsDetailFragment.KEY_NEWS_ID, id);
+        bundle.putString(NewsDetailFragment.KEY_URL, url);
         mDetailFragment.setArguments(bundle);
         mDetailFragment.show(getFragmentManager(), "NewsDetailFragment");
     }

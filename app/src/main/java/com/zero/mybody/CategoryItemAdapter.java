@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.zero.mybody.jsonResult.CategoryItemResult;
-import com.zero.mybody.jsonResult.CategoryItemResult.CategoryItem;
-import com.zero.mybody.net.HttpManager;
+import com.zero.mybody.jsonResult.CategoryList.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,15 +21,15 @@ import java.util.List;
  */
 public class CategoryItemAdapter extends BaseAdapter {
     private Context mContext;
-    private List<CategoryItemResult.CategoryItem> mList;
+    private List<ContentlistBean> mList;
 
     public interface OnCategoryClickListener {
-        void onClickItem(int id);
+        void onClickItem(String url);
     }
 
     private OnCategoryClickListener listener;
 
-    public CategoryItemAdapter(Context context, List<CategoryItem> list) {
+    public CategoryItemAdapter(Context context, List<ContentlistBean> list) {
         mContext = context;
         mList = list;
     }
@@ -54,7 +52,7 @@ public class CategoryItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Holder holder = null;
-        final CategoryItem item = mList.get(position);
+        final ContentlistBean item = mList.get(position);
 
         if (convertView == null) {
             holder = new Holder();
@@ -70,21 +68,21 @@ public class CategoryItemAdapter extends BaseAdapter {
         }
 
         holder.titleTv.setText(item.getTitle());
-        holder.timeTv.setText(toTime(item.getTime()));
-        holder.descriptionTv.setText(item.getDescription());
+        holder.timeTv.setText(item.getCtime());
+        holder.descriptionTv.setText(item.getIntro());
 
         holder.itemLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClickItem(item.getId());
+                listener.onClickItem(item.getWapurl());
             }
         });
 
-        Glide.with(mContext).load(HttpManager.IMG_URL+item.getImg()).into(holder.img);
+        Glide.with(mContext).load(item.getImg()).into(holder.img);
         return convertView;
     }
 
-    public void setList(List<CategoryItem> mList) {
+    public void setList(List<ContentlistBean> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }

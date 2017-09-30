@@ -5,19 +5,6 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-
-    <ProgressBar
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_weight="1"
-        android:text="@string/loading_text"
-        android:textSize="18sp"
-        android:gravity="center" />
+    android:layout_height="match_parent" >
 
 </LinearLayout>

@@ -7,6 +7,14 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+
     <meta-data
         android:name="com.qihoo360.plugin.name"
         android:value="pluginNews" />
@@ -37,7 +45,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="denghui.me.replugindemo.plugin1.ICatchNews"/>
+                <action android:name="denghui.me.replugindemo.plugin1.ICatchNews" />
             </intent-filter>
         </service>
     </application>

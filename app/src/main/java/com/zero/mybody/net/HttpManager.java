@@ -1,9 +1,8 @@
 package com.zero.mybody.net;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.zero.mybody.jsonResult.CategoryDetailResult;
-import com.zero.mybody.jsonResult.CategoryItemResult;
-import com.zero.mybody.jsonResult.CategoryResult;
+import com.zero.mybody.jsonResult.Category;
+import com.zero.mybody.jsonResult.CategoryList;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -23,14 +22,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HttpManager {
 
-    private static final String BASE_URL = "http://www.tngou.net/api/info/";
-
-    public static final String IMG_URL = "http://tnfs.tngou.net/image";
+//    private static final String BASE_URL = "http://www.tngou.net/api/info/";
+//
+//    public static final String IMG_URL = "http://tnfs.tngou.net/image";
 
     private static final int DEFAULT_TIMEOUT = 5;
 
     private Retrofit mRetrofit;
-    private CategoryService mService;
+    private ReqNewsServiceApi mService;
 
     private static class SingletonHolder {
         private static final HttpManager INSTANCE = new HttpManager();
@@ -58,36 +57,39 @@ public class HttpManager {
 
         mRetrofit = new Retrofit.Builder()
                 .client(httpClient)
-                .baseUrl(BASE_URL)
+                .baseUrl(HealthApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        mService = mRetrofit.create(CategoryService.class);
+        mService = mRetrofit.create(ReqNewsServiceApi.class);
     }
 
-    public void requestGetAllCategory(Consumer<CategoryResult> consumer) {
-        mService.getAllCategory()
+    public void requestGetAllCategory(Consumer<Category> consumer) {
+        mService.getCategories()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
     }
 
-    public void requestGetCategoryList(Consumer<CategoryItemResult> consumer, int id) {
-        mService.getDefaultCategoryList(id)
+
+    public void requestGetCategoryList(Consumer<CategoryList> consumer, int id) {
+        mService.getNewsListById(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
     }
 
-    public void requestGetCategoryDetail(Consumer<CategoryDetailResult> consumer, int id) {
+     /*
+    public void requestGetCategoryDetail(Consumer<CategoryDetail> consumer, int id) {
         mService.getCategoryDetail(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
     }
+    */
 
 }

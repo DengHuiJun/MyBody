@@ -2,7 +2,7 @@ package com.zero.mybody;
 
 import android.app.Application;
 
-import com.zero.mybody.jsonResult.CategoryResult;
+import com.zero.mybody.jsonResult.Category.ShowapiResBodyBean.ListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class BaseApplication extends Application {
 
     // 全局缓存标题栏
-    public static final List<CategoryResult.Category> TITLE_LIST = new ArrayList<>(10);
+    public static final List<ListBean> TITLE_LIST = new ArrayList<>(10);
 
     @Override
     public void onCreate() {
